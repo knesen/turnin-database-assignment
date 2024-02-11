@@ -4,9 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
-using Infrastructure.DTOs;
 using Presentation.Services;
-using Infrastructure.Entities;
 
 var builder = Host.CreateDefaultBuilder().ConfigureServices(services => 
 { 

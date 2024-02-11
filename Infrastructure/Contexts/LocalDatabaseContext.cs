@@ -13,25 +13,5 @@ public partial class LocalDatabaseContext(DbContextOptions<LocalDatabaseContext>
     public virtual DbSet<AddressEntity> Addresses { get; set; }
     public virtual DbSet<CustomerEntity> Customers { get; set; }
 
- 
 
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    modelBuilder.Entity<CategoryEntity>()
-    //        .HasIndex(x => x.Name)
-    //        .IsUnique();
-
-    //    modelBuilder.Entity<ProductEntity>()
-    //        .HasIndex(x => x.Id)
-    //        .IsUnique();
-
-    //    modelBuilder.Entity<CustomerEntity>()
-    //        .HasIndex(x => x.Email)
-    //        .IsUnique();
-
-    //    modelBuilder.Entity<OrderEntity>()
-    //        .HasIndex(x => x.Id)
-    //        .IsUnique();
-
-    //}
 }

@@ -1,7 +1,6 @@
 ﻿using Infrastructure.DTOs;
 using Infrastructure.Entities;
 using Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Infrastructure.Services;

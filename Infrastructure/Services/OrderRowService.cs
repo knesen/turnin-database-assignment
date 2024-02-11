@@ -46,27 +46,5 @@ public class OrderRowService(OrderRowRepository repository, ProductRepository pr
         return null!;
     }
 
-    //public IEnumerable<OrderRowDTO> GetOrderRows(int orderId)
-    //{
-    //    var orderRows = new List<OrderRowDTO>();
-        
-     
-    //    try
-    //    {
-    //        var result = _orderRowRepository.GetAll();
-    //        foreach (var item in result)
-    //            orderRows.Add(new OrderRowDTO
-    //            {
-    //                OrderId = item.OrderId,
-    //                Product = item.Product,
-    //                Quantity = item.Quantity,
-    //                OrderRowPrice = item.OrderRowPrice,
-    //                OrderRowProductId = item.Product.ProductId,
 
-    //            });
-    //    }
-    //    catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
-
-    //    return orderRows;
-    //}
 }
