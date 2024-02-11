@@ -32,7 +32,7 @@ public abstract class BaseRepository<TEntity> where TEntity : class
         {
             var result = _context.Set<TEntity>().ToList();
             if (result != null)
-            {
+            { 
                 return result;
             }
         }

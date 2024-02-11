@@ -77,9 +77,21 @@ public class OrderService(OrderRowRepository orderRowRepository, CustomerReposit
     public OrderEntity GetOneOrder(int orderId)
     {
         var result = _orderRepository.GetOne(x => x.OrderId == orderId);
+        
+        var orderRowList = _orderRowRepository.GetOrderRowsByOrderId(orderId);
 
-        if (result != null) return result;
-        else return null!;
+        foreach (var orderRow in orderRowList)
+        {
+            orderRow.Product = _productRepository.GetOne(x => x.ProductId == orderRow.OrderRowProductId);
+            orderRow.OrderRowPrice = orderRow.Product.Price;
+            result.OrderRows.Add(orderRow);
+        }
+
+
+        if (result != null) 
+            return result;
+        else 
+            return null!;
     }
 
     public OrderEntity UpdateOneOrder(OrderEntity orderEntity)

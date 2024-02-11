@@ -59,8 +59,9 @@ public class CustomerService(AddressRepository addressRepository, CustomerReposi
                     LastName = item.LastName,
                     Email = item.Email,
                     PhoneNumber = item.PhoneNumber,
-                    AddressId = item.Address.AddressId
-                });
+                    AddressId = item.AddressId,
+                    Address = _addressRepository.GetOne(x => x.AddressId == item.AddressId)
+        });
         }
         catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
 

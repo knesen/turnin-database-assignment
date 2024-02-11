@@ -40,23 +40,24 @@ public class ProductService(CategoryRepository categoryRepository, ProductReposi
         return false;
     }
 
-    public IEnumerable<ProductDTO> GetAllProducts()
+    public IEnumerable<ProductEntity> GetAllProducts()
     {
-        var products = new List<ProductDTO>();
+        var products = new List<ProductEntity>();
 
         try
         {
         var result = _productRepository.GetAll();
 
         foreach (var item in result)
-            products.Add(new ProductDTO
+            products.Add(new ProductEntity
             {
                 ProductId = item.ProductId,
                 ProductName = item.ProductName,
                 Description = item.Description,
                 Price = item.Price,
-                CategoryName = item.Category.CategoryName
-            });
+                CategoryId = item.CategoryId,
+                Category = _categoryRepository.GetOne(x => x.CategoryId == item.CategoryId),
+        });
             
         }
         catch (Exception ex) { Debug.WriteLine("Error :: " + ex.Message); }
@@ -67,6 +68,7 @@ public class ProductService(CategoryRepository categoryRepository, ProductReposi
     public ProductEntity GetOneProduct(string productId)
     {
         var result = _productRepository.GetOne(x => x.ProductId == productId);
+        result.Category = _categoryRepository.GetOne(x => x.CategoryId == result.CategoryId);
 
         if (result != null) return result;
         else return null!;

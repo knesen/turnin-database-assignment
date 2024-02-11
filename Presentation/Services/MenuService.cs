@@ -1,5 +1,6 @@
 ﻿using Infrastructure.DTOs;
 using Infrastructure.Entities;
+using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.IdentityModel.Tokens;
 
@@ -190,7 +191,18 @@ public class MenuService(CustomerService customerService, OrderService orderServ
         Console.WriteLine("Visar alla produkter i databasen:");
         var result = _productService.GetAllProducts();
 
-        Console.WriteLine(result);
+        Console.Clear();
+
+        foreach (var item in result)
+        {
+
+            Console.WriteLine($"Artikelnummer: {item.ProductId}");
+            Console.WriteLine($"Produktnamn: {item.ProductName}");
+            Console.WriteLine($"Kategori: {item.Category.CategoryName}");
+            Console.WriteLine($"Pris: {item.Price}");
+            Console.WriteLine();
+        }
+      
     }
 
     public void GetOneProductMenu()
@@ -289,7 +301,20 @@ public class MenuService(CustomerService customerService, OrderService orderServ
 
         Console.Clear();
 
-        Console.WriteLine(result);
+        foreach (var item in result)
+        {
+            
+            Console.WriteLine($"Kundnummer: {item.CustomerId}");
+            Console.WriteLine($"Namn: {item.FirstName} {item.LastName}");
+            Console.WriteLine($"E-postadress: {item.Email}");
+            Console.WriteLine($"Telefonnummer: {item.PhoneNumber}");            
+            Console.WriteLine($"Gatuadress: {item.Address.StreetAddress}");
+            Console.WriteLine($"Postkod: {item.Address.ZipCode}");
+            Console.WriteLine($"Stad: {item.Address.City}");
+            Console.WriteLine();
+        }
+
+       
     }
 
     public void GetOneCustomerMenu()
@@ -344,9 +369,26 @@ public class MenuService(CustomerService customerService, OrderService orderServ
         var formProduct = new ProductEntity();
         var formCustomer = new CustomerEntity();
 
+        var option = Console.ReadLine();
+
+            
+
         Console.WriteLine("Skapa en ny order");
         Console.WriteLine();
+        Console.Write("Kundens e-postadress: ");
+        formCustomer.Email = Console.ReadLine()!;
+
+        Console.WriteLine("1: Lägg till en orderrad");
+        Console.WriteLine("2: Spara order");
+
+        //switch (option)
+        //{
+        //    case 1: 
+
+
+        //}
         Console.WriteLine("Lägg till en produkt");
+
 
         Console.Write("Artikelnummer: ");
         formProduct.ProductId = Console.ReadLine()!;
@@ -354,8 +396,6 @@ public class MenuService(CustomerService customerService, OrderService orderServ
         Console.Write("Antal: ");        
         int quantity = Convert.ToInt32(Console.ReadLine());
 
-        Console.Write("Kundens e-postadress: ");
-        formCustomer.Email = Console.ReadLine()!;
                 
         formCustomer = _customerService.GetOneCustomer(formCustomer.Email);
 
@@ -391,7 +431,18 @@ public class MenuService(CustomerService customerService, OrderService orderServ
 
         Console.Clear();
 
-        Console.WriteLine(result);
+        foreach (var item in result)
+        {
+            Console.WriteLine($"Ordernummer: {item.OrderId}");
+            Console.WriteLine($"Kundnummer: {item.CustomerId}");
+            var rows = item.OrderRows;
+            foreach (var row in rows)
+            {
+                Console.WriteLine($"{row.Product.ProductName}");
+                Console.WriteLine($"{row.OrderRowPrice}");
+            }
+          Console.WriteLine();
+        }
     }
 
     public void GetOneOrderMenu()
@@ -403,6 +454,8 @@ public class MenuService(CustomerService customerService, OrderService orderServ
 
         var result = _orderService.GetOneOrder(orderId);
 
+        
+
         Console.Clear();
 
         if (result != null)
@@ -410,8 +463,13 @@ public class MenuService(CustomerService customerService, OrderService orderServ
             Console.Clear();
             Console.WriteLine($"Ordernummer: {result.OrderId}");
             Console.WriteLine($"Kundnummer: {result.CustomerId}");
+
             new List<OrderRowEntity>(result.OrderRows).ForEach(row =>
-            Console.WriteLine($"Produktnamn: {row.Product.ProductName}"));
+            Console.WriteLine($"Produktnamn: {row.Product.ProductName}", Environment.NewLine,
+            $"Antal: {row.Quantity}", Environment.NewLine,
+            $"Pris: {row.OrderRowPrice}"
+            ));
+
 
         }
         else
